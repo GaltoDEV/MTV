@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - México Tiene Vida</title>
+    <style>
+        :root {
+            --blue: #003da5;
+            --gold: #b39267;
+            --light-gold: #d9c3a8;
+            --light-blue: #e8eeff;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --light-gray: #eaeaea;
+            --dark-gray: #333333;
+            --medium-gray: #777777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark-gray);
+        }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--white);
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--light-gray);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            width: 120px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: var(--gray);
+        }
+
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--blue);
+        }
+
+        /* Profile Content */
+        .profile-content {
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-picture-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 25px;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: 300;
+            color: var(--blue);
+            border: 3px solid var(--gold);
+        }
+
+        .edit-photo-button {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .edit-photo-button:hover {
+            transform: scale(1.05);
+        }
+
+        .edit-photo-button svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--white);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .profile-details {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .profile-detail-item {
+            margin-bottom: 20px;
+        }
+
+        .profile-detail-label {
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-bottom: 5px;
+        }
+
+        .profile-detail-value {
+            font-size: 18px;
+            color: var(--dark-gray);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-detail-value svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            fill: var(--gold);
+        }
+
+        /* Navigation Footer */
+        .nav-footer {
+            display: flex;
+            border-top: 1px solid var(--light-gray);
+            background-color: var(--white);
+            position: sticky;
+            bottom: 0;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 12px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--blue);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            fill: currentColor;
+        }
+
+        .nav-item:hover {
+            background-color: var(--gray);
+        }
+
+        .nav-item.home svg {
+            width: 28px;
+            height: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="back-button">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </div>
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 100' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 10 C 130 10, 100 20, 100 50 C 100 60, 110 70, 150 70 L 150 10' /%3E%3Cpath class='gold' d='M40 10 C 60 10, 100 10, 120 30 L 80 40 C 60 30, 40 20, 40 10' /%3E%3Cpath class='gold' d='M220 10 C 240 10, 260 10, 260 30 L 220 40 C 200 30, 220 20, 220 10' /%3E%3Cpath class='white' d='M150 25 C 160 25, 170 30, 170 35 L 178 28 C 178 25, 182 22, 187 22 C 192 22, 195 24, 195 27 C 195 29, 190 33, 183 38 L 186 40 C 175 50, 160 55, 145 55 L 145 35 C 145 30, 140 25, 150 25' /%3E%3Ctext class='blue' x='150' y='85' font-family='Arial, sans-serif' font-weight='bold' font-size='9' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+            <div style="width: 40px;"></div> <!-- Spacer to center logo -->
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <div class="profile-picture-container">
+                <div class="profile-picture">
+                    M
+                </div>
+                <div class="edit-photo-button">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="profile-name">Miguel Martínez</h1>
+
+            <div class="profile-details">
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Teléfono</div>
+                    <div class="profile-detail-value">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        55 1234 5678
+                    </div>
+                </div>
+
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Correo electrónico</div>
+                    <div class="profile-detail-value">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        miguel.martinez@example.com
+                    </div>
+                </div>
+
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Estado</div>
+                    <div class="profile-detail-value">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        Ciudad de México
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="nav-footer">
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                INFO
+            </a>
+            <a href="#" class="nav-item home">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                REDES
+            </a>
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                </svg>
+                MENSAJES
+            </a>
+        </div>
+    </div>
+</body>
+</html>

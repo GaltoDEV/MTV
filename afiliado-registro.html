@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Afiliados - Inicio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .logo-img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .welcome-text {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .register-text {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .social-button {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            text-align: center;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .google-btn {
+            color: #4285F4;
+            border-color: #4285F4;
+        }
+
+        .facebook-btn {
+            color: #3b5998;
+            border-color: #3b5998;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: #777;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .separator::before {
+            margin-right: 10px;
+        }
+
+        .separator::after {
+            margin-left: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4285F4;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #002d7a;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="logo-container">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220' width='200' height='150'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='190' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO%3C/text%3E%3Ctext class='blue' x='150' y='210' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3ETIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo-img">
+        </div>
+
+        <h1 class="welcome-text">Bienvenido a tu App</h1>
+
+        <p class="register-text">Registro</p>
+
+        <div class="social-buttons">
+            <button class="social-button google-btn">Google</button>
+            <button class="social-button facebook-btn">Facebook</button>
+        </div>
+
+        <div class="separator">o</div>
+
+        <form>
+            <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-input" placeholder="Ingresa tu nombre completo">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" class="form-input" placeholder="Ingresa tu número de teléfono">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Contraseña</label>
+                <input type="password" class="form-input" placeholder="Crea una contraseña">
+            </div>
+
+            <button type="submit" class="submit-button">INGRESAR</button>
+        </form>
+    </div>
+</body>
+</html>

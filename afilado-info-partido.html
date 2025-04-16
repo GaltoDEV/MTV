@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Partido - México Tiene Vida</title>
+    <style>
+        :root {
+            --blue: #003da5;
+            --gold: #b39267;
+            --light-gold: #d9c3a8;
+            --light-blue: #e8eeff;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --dark-gray: #333333;
+            --medium-gray: #777777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark-gray);
+        }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--white);
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eaeaea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            width: 120px;
+        }
+
+        .profile-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-gray);
+            font-weight: bold;
+        }
+
+        .profile-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--blue);
+        }
+
+        /* Content Styles */
+        .content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .info-card {
+            border-radius: 12px;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .info-card-title {
+            color: var(--blue);
+            font-size: 20px;
+            font-weight: 600;
+            padding: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .info-card-text {
+            padding: 15px;
+            line-height: 1.5;
+            color: var(--dark-gray);
+            font-size: 16px;
+        }
+
+        .info-card-text p {
+            margin-bottom: 10px;
+        }
+
+        .info-card-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .carousel-slider {
+            display: flex;
+            overflow-x: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .carousel-slide {
+            flex-shrink: 0;
+            width: 100%;
+            scroll-snap-align: start;
+            height: 200px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-blue);
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .carousel-control.prev {
+            left: 10px;
+        }
+
+        .carousel-control.next {
+            right: 10px;
+        }
+
+        .carousel-control svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--blue);
+        }
+
+        /* Navigation Footer */
+        .nav-footer {
+            display: flex;
+            border-top: 1px solid #eaeaea;
+            background-color: var(--white);
+            position: sticky;
+            bottom: 0;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 12px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--blue);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            fill: currentColor;
+        }
+
+        .nav-item:hover {
+            background-color: var(--gray);
+        }
+
+        .nav-item.home {
+            position: relative;
+        }
+
+        .nav-item.home svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Card Divider */
+        .card-divider {
+            height: 1px;
+            background-color: #eaeaea;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 100' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 10 C 130 10, 100 20, 100 50 C 100 60, 110 70, 150 70 L 150 10' /%3E%3Cpath class='gold' d='M40 10 C 60 10, 100 10, 120 30 L 80 40 C 60 30, 40 20, 40 10' /%3E%3Cpath class='gold' d='M220 10 C 240 10, 260 10, 260 30 L 220 40 C 200 30, 220 20, 220 10' /%3E%3Cpath class='white' d='M150 25 C 160 25, 170 30, 170 35 L 178 28 C 178 25, 182 22, 187 22 C 192 22, 195 24, 195 27 C 195 29, 190 33, 183 38 L 186 40 C 175 50, 160 55, 145 55 L 145 35 C 145 30, 140 25, 150 25' /%3E%3Ctext class='blue' x='150' y='85' font-family='Arial, sans-serif' font-weight='bold' font-size='9' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+            <div class="profile-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Quiénes Somos Card -->
+            <div class="info-card">
+                <h2 class="info-card-title">¿Quiénes Somos?</h2>
+                <div class="info-card-text">
+                    <p>Somos un movimiento político comprometido con la transformación de México. Nuestro partido está formado por ciudadanos que buscan construir un país con más oportunidades, justicia y desarrollo para todos.</p>
+                    <p>Creemos en la democracia participativa, el respeto a los derechos humanos y el desarrollo sostenible como pilares fundamentales para el crecimiento de nuestra nación.</p>
+                </div>
+
+                <div class="carousel-container">
+                    <div class="carousel-slider">
+                        <div class="carousel-slide">
+                            <img src="/api/placeholder/400/200" alt="Imagen de México Tiene Vida">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="/api/placeholder/400/200" alt="Miembros del partido">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="/api/placeholder/400/200" alt="Evento del partido">
+                        </div>
+                    </div>
+
+                    <div class="carousel-control prev">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                        </svg>
+                    </div>
+
+                    <div class="carousel-control next">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Por qué Surge Card -->
+            <div class="info-card">
+                <h2 class="info-card-title">¿Por qué Surge?</h2>
+                <div class="info-card-text">
+                    <p>México Tiene Vida surge como respuesta a la necesidad de un nuevo proyecto político que represente verdaderamente los intereses de todos los mexicanos.</p>
+                    <p>Nuestro movimiento nació de la convicción de que es posible construir un México más justo, próspero y con mayor calidad de vida para todos sus habitantes, especialmente para quienes han sido históricamente marginados.</p>
+                </div>
+
+                <div class="carousel-container">
+                    <div class="carousel-slider">
+                        <div class="carousel-slide">
+                            <img src="/api/placeholder/400/200" alt="Origen del partido">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="/api/placeholder/400/200" alt="Fundadores">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="/api/placeholder/400/200" alt="Historia del partido">
+                        </div>
+                    </div>
+
+                    <div class="carousel-control prev">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                        </svg>
+                    </div>
+
+                    <div class="carousel-control next">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="nav-footer">
+            <a href="#" class="nav-item active">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                INFO
+            </a>
+            <a href="#" class="nav-item home">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                REDES
+            </a>
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                </svg>
+                MENSAJES
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Simplified carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliders = document.querySelectorAll('.carousel-slider');
+
+            sliders.forEach(slider => {
+                const slides = slider.querySelectorAll('.carousel-slide');
+                const prevBtn = slider.parentElement.querySelector('.prev');
+                const nextBtn = slider.parentElement.querySelector('.next');
+                let slideIndex = 0;
+
+                // Set initial position
+                slides.forEach((slide, index) => {
+                    slide.style.left = `${index * 100}%`;
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    slideIndex = Math.max(slideIndex - 1, 0);
+                    updateSlidePosition();
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    slideIndex = Math.min(slideIndex + 1, slides.length - 1);
+                    updateSlidePosition();
+                });
+
+                function updateSlidePosition() {
+                    slider.scrollTo({
+                        left: slideIndex * slider.offsetWidth,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
