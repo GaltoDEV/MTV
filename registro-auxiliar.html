@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Registro de Auxiliar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        .header-text {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: #003da5;
+            font-weight: 600;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #003da5;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #003da5;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+            user-select: none;
+            font-size: 14px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #002d7a;
+        }
+
+        .helper-text {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+            margin-left: 2px;
+        }
+
+        .required-mark {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        .terms-container {
+            margin-top: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .terms-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .terms-link {
+            color: #003da5;
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        .recovery-container {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .recovery-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .recovery-link {
+            color: #003da5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .recovery-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="logo-container">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220' width='180' height='140'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='190' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO%3C/text%3E%3Ctext class='blue' x='150' y='210' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3ETIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo-img">
+        </div>
+
+        <h1 class="header-text">Registro de Auxiliar</h1>
+        <p class="form-title">Ingresa tus datos para registrarte</p>
+
+        <form>
+            <div class="form-group">
+                <label class="form-label">Nombre completo<span class="required-mark">*</span></label>
+                <input type="text" class="form-input" placeholder="Ingresa tu nombre y apellidos" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Teléfono<span class="required-mark">*</span></label>
+                <input type="tel" class="form-input" placeholder="Ej. 5512345678" required>
+                <p class="helper-text">Te enviaremos un código de verificación a este número</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Folio<span class="required-mark">*</span></label>
+                <input type="text" class="form-input" placeholder="Ingresa el folio proporcionado" required>
+                <p class="helper-text">El folio te fue enviado por tu organización</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Estado<span class="required-mark">*</span></label>
+                <select class="form-select" required>
+                    <option value="" disabled selected>Selecciona tu estado</option>
+                    <option value="AG">Aguascalientes</option>
+                    <option value="BC">Baja California</option>
+                    <option value="BS">Baja California Sur</option>
+                    <option value="CM">Campeche</option>
+                    <option value="CS">Chiapas</option>
+                    <option value="CH">Chihuahua</option>
+                    <option value="CX">Ciudad de México</option>
+                    <option value="CO">Coahuila</option>
+                    <option value="CL">Colima</option>
+                    <option value="DG">Durango</option>
+                    <option value="GT">Guanajuato</option>
+                    <option value="GR">Guerrero</option>
+                    <option value="HG">Hidalgo</option>
+                    <option value="JC">Jalisco</option>
+                    <option value="MC">Estado de México</option>
+                    <option value="MN">Michoacán</option>
+                    <option value="MS">Morelos</option>
+                    <option value="NT">Nayarit</option>
+                    <option value="NL">Nuevo León</option>
+                    <option value="OX">Oaxaca</option>
+                    <option value="PL">Puebla</option>
+                    <option value="QT">Querétaro</option>
+                    <option value="QR">Quintana Roo</option>
+                    <option value="SL">San Luis Potosí</option>
+                    <option value="SN">Sinaloa</option>
+                    <option value="SR">Sonora</option>
+                    <option value="TB">Tabasco</option>
+                    <option value="TM">Tamaulipas</option>
+                    <option value="TL">Tlaxcala</option>
+                    <option value="VZ">Veracruz</option>
+                    <option value="YN">Yucatán</option>
+                    <option value="ZS">Zacatecas</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Contraseña<span class="required-mark">*</span></label>
+                <div class="password-container">
+                    <input type="password" class="form-input" placeholder="Crea una contraseña segura" required>
+                    <span class="password-toggle">Mostrar</span>
+                </div>
+                <p class="helper-text">Mínimo 8 caracteres con al menos una letra y un número</p>
+            </div>
+
+            <div class="terms-container">
+                <p class="terms-text">
+                    Al registrarte, aceptas nuestros <a href="#" class="terms-link">Términos y Condiciones</a> y <a href="#" class="terms-link">Política de Privacidad</a>
+                </p>
+            </div>
+
+            <button type="submit" class="submit-button">REGISTRARME</button>
+        </form>
+
+        <div class="recovery-container">
+            <p class="recovery-text">
+                ¿Ya tienes cuenta? <a href="#" class="recovery-link">Iniciar sesión</a>
+            </p>
+            <p class="recovery-text" style="margin-top: 8px;">
+                ¿Olvidaste tu contraseña? <a href="#" class="recovery-link">Recuperar contraseña</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar/ocultar contraseña
+        document.querySelector('.password-toggle').addEventListener('click', function() {
+            const passwordInput = this.previousElementSibling;
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.textContent = 'Ocultar';
+            } else {
+                passwordInput.type = 'password';
+                this.textContent = 'Mostrar';
+            }
+        });
+    </script>
+</body>
+</html>

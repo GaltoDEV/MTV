@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Editar Afiliado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .back-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .profile-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Form Heading */
+        .form-heading {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #003da5;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .required-asterisk {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #003da5;
+        }
+
+        .form-helper {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* ID Card Upload Section */
+        .id-card-container {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .id-card-upload {
+            flex: 1;
+            position: relative;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .id-card-upload:hover {
+            border-color: #003da5;
+            background-color: #f9f9f9;
+        }
+
+        .id-card-upload input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            width: 36px;
+            height: 36px;
+            fill: #b39267;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .upload-instruction {
+            font-size: 12px;
+            color: #003da5;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .image-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .remove-icon {
+            width: 16px;
+            height: 16px;
+            fill: #e74c3c;
+        }
+
+        /* Submit Button */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 16px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 61, 165, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .submit-btn:hover {
+            background-color: #002d7a;
+        }
+
+        .cancel-btn {
+            background-color: #f2f2f2;
+            color: #555;
+            border: none;
+            border-radius: 25px;
+            padding: 16px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .cancel-btn:hover {
+            background-color: #e6e6e6;
+        }
+
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .save-icon {
+            fill: white;
+        }
+
+        .cancel-icon {
+            fill: #555;
+        }
+
+        /* Privacy Notice */
+        .privacy-notice {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .privacy-link {
+            color: #003da5;
+            text-decoration: none;
+        }
+
+        .privacy-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Timestamp Section */
+        .timestamp-section {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with back button, logo, and profile icon -->
+    <header class="header">
+        <button class="back-btn">
+            <svg class="back-icon" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+        </button>
+
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='148' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+
+        <button class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Form Heading -->
+        <div class="form-heading">
+            <h1 class="page-title">Editar Afiliado</h1>
+            <p class="page-subtitle">Modifica los datos del afiliado</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form class="form-container">
+            <!-- Nombre Completo -->
+            <div class="form-group">
+                <label class="form-label">Nombre completo<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-input" value="Roberto Sánchez Vega" required>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="form-group">
+                <label class="form-label">Teléfono<span class="required-asterisk">*</span></label>
+                <input type="tel" class="form-input" value="5523456789" required>
+                <p class="form-helper">Número a 10 dígitos sin espacios ni guiones</p>
+            </div>
+
+            <!-- Credencial de Elector - Frente -->
+            <div class="form-group">
+                <label class="form-label">Fotografía frontal de la credencial<span class="required-asterisk">*</span></label>
+                <div class="id-card-upload" id="frontCardContainer">
+                    <input type="file" accept="image/*" id="frontCardInput">
+                    <!-- Imagen previa ya cargada -->
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='200' viewBox='0 0 320 200'%3E%3Crect width='320' height='200' fill='%23f0f0f0'/%3E%3Crect x='20' y='20' width='280' height='160' rx='10' fill='%23ddd'/%3E%3Ccircle cx='80' cy='80' r='30' fill='%23bbb'/%3E%3Crect x='130' y='50' width='150' height='10' rx='2' fill='%23bbb'/%3E%3Crect x='130' y='70' width='120' height='10' rx='2' fill='%23bbb'/%3E%3Crect x='130' y='90' width='160' height='10' rx='2' fill='%23bbb'/%3E%3Crect x='50' y='130' width='220' height='30' rx='2' fill='%23bbb'/%3E%3Ctext x='160' y='105' font-family='Arial' font-size='11' fill='%23888' text-anchor='middle'%3ECredencial para Votar%3C/text%3E%3C/svg%3E" class="image-preview" alt="Frente de credencial">
+                    <div class="remove-image" id="removeFrontImage">
+                        <svg class="remove-icon" viewBox="0 0 24 24">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Credencial de Elector - Reverso -->
+            <div class="form-group">
+                <label class="form-label">Fotografía trasera de la credencial<span class="required-asterisk">*</span></label>
+                <div class="id-card-upload" id="backCardContainer">
+                    <input type="file" accept="image/*" id="backCardInput">
+                    <!-- Imagen previa ya cargada -->
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='200' viewBox='0 0 320 200'%3E%3Crect width='320' height='200' fill='%23f0f0f0'/%3E%3Crect x='20' y='20' width='280' height='160' rx='10' fill='%23ddd'/%3E%3Crect x='40' y='40' width='240' height='30' rx='2' fill='%23bbb'/%3E%3Crect x='40' y='90' width='240' height='20' rx='2' fill='%23bbb'/%3E%3Crect x='40' y='130' width='100' height='30' rx='2' fill='%23bbb'/%3E%3Crect x='160' y='130' width='100' height='30' rx='2' fill='%23bbb'/%3E%3Ctext x='160' y='75' font-family='Arial' font-size='11' fill='%23888' text-anchor='middle'%3EReverso de Credencial%3C/text%3E%3C/svg%3E" class="image-preview" alt="Reverso de credencial">
+                    <div class="remove-image" id="removeBackImage">
+                        <svg class="remove-icon" viewBox="0 0 24 24">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Timestamp Section -->
+        <div class="timestamp-section">
+            <p>Registro original: 15/04/2025 10:23</p>
+            <p>Última modificación: 15/04/2025 15:45</p>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="buttons-container">
+            <button type="button" class="cancel-btn">
+                <svg class="btn-icon cancel-icon" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+                Cancelar
+            </button>
+            <button type="submit" class="submit-btn">
+                <svg class="btn-icon save-icon" viewBox="0 0 24 24">
+                    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                </svg>
+                Guardar
+            </button>
+        </div>
+
+        <!-- Privacy Notice -->
+        <p class="privacy-notice">
+            Al actualizar los datos del afiliado, confirmas que cuentas con su autorización para el tratamiento de sus datos personales conforme al <a href="#" class="privacy-link">Aviso de Privacidad</a>.
+        </p>
+    </main>
+
+    <!-- Scripts for image preview functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para manejar la eliminación y reemplazo de imágenes
+            function setupImageReplacement(inputId, containerId, removeButtonId) {
+                const input = document.getElementById(inputId);
+                const container = document.getElementById(containerId);
+                const removeBtn = document.getElementById(removeButtonId);
+
+                // Mantener una referencia a la imagen actual
+                const currentImage = container.querySelector('.image-preview');
+
+                // Configurar evento para el botón de eliminar
+                removeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+
+                    // Ocultar imagen actual y botón de eliminar
+                    currentImage.style.display = 'none';
+                    removeBtn.style.display = 'none';
+
+                    // Restaurar contenido para cargar nueva imagen
+                    const uploadIcon = document.createElement('svg');
+                    uploadIcon.className = 'upload-icon';
+                    uploadIcon.innerHTML = `<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>`;
+                    uploadIcon.setAttribute('viewBox', '0 0 24 24');
+
+                    const uploadText = document.createElement('p');
+                    uploadText.className = 'upload-text';
+                    uploadText.textContent = containerId === 'frontCardContainer' ?
+                        'Toma o selecciona una foto del frente' : 'Toma o selecciona una foto del reverso';
+
+                    const instruction = document.createElement('p');
+                    instruction.className = 'upload-instruction';
+                    instruction.textContent = 'Toca para capturar';
+
+                    container.appendChild(uploadIcon);
+                    container.appendChild(uploadText);
+                    container.appendChild(instruction);
+                });
+
+                // Configurar evento para cargar nueva imagen
+                input.addEventListener('change', function(e) {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            // Eliminar elementos de subida si existen
+                            const uploadIcon = container.querySelector('.upload-icon');
+                            const uploadText = container.querySelector('.upload-text');
+                            const instruction = container.querySelector('.upload-instruction');
+
+                            if (uploadIcon) container.removeChild(uploadIcon);
+                            if (uploadText) container.removeChild(uploadText);
+                            if (instruction) container.removeChild(instruction);
+
+                            // Actualizar la imagen
+                            currentImage.src = e.target.result;
+                            currentImage.style.display = 'block';
+                            removeBtn.style.display = 'flex';
+                        }
+
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            }
+
+            // Configurar la funcionalidad para ambas imágenes
+            setupImageReplacement('frontCardInput', 'frontCardContainer', 'removeFrontImage');
+            setupImageReplacement('backCardInput', 'backCardContainer', 'removeBackImage');
+        });
+    </script>
+</body>
+</html>
