@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Mensajes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .profile-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-bottom: 70px; /* Space for footer */
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #003da5;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            overflow: hidden;
+            background-color: white;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .tab-button {
+            flex: 1;
+            background-color: transparent;
+            border: none;
+            padding: 15px 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #777;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab-button.active {
+            color: #003da5;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #003da5;
+        }
+
+        .tab-button .notification-badge {
+            position: absolute;
+            top: 10px;
+            right: calc(50% - 30px);
+            background-color: #e74c3c;
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Messages List */
+        .messages-container {
+            background-color: white;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .message-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .message-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .message-item:last-child {
+            border-bottom: none;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #e8eeff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #003da5;
+            margin-right: 15px;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+
+        .message-content {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .message-preview {
+            font-size: 14px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .message-status {
+            display: flex;
+            align-items: center;
+            margin-top: 3px;
+        }
+
+        .message-status-icon {
+            width: 16px;
+            height: 16px;
+            fill: #b39267;
+            margin-right: 5px;
+        }
+
+        .message-status-text {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .unread-message .message-sender {
+            color: #003da5;
+            font-weight: 700;
+        }
+
+        .unread-message .message-preview {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .unread-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #003da5;
+            border-radius: 50%;
+            margin-right: 15px;
+            margin-left: 5px;
+            flex-shrink: 0;
+        }
+
+        /* New Message Button */
+        .new-message-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background-color: #003da5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 61, 165, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            z-index: 900;
+        }
+
+        .new-message-btn:hover {
+            background-color: #002d7a;
+            transform: scale(1.05);
+        }
+
+        .new-message-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            fill: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .empty-description {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .start-message-btn {
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .start-message-icon {
+            width: 18px;
+            height: 18px;
+            fill: white;
+            margin-right: 8px;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 12px;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #003da5;
+        }
+
+        .nav-icon {
+            width: 22px;
+            height: 22px;
+            margin-bottom: 3px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with hamburger menu, logo, and profile icon -->
+    <header class="header">
+        <button class="menu-btn">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+            </svg>
+        </button>
+
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='148' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+
+        <button class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <h1 class="page-title">Mensajes</h1>
+
+        <!-- Messages List -->
+        <div class="messages-container">
+            <!-- Unread Message -->
+            <div class="message-item unread-message">
+                <div class="unread-indicator"></div>
+                <div class="message-avatar">MX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <div class="message-sender">México Tiene Vida</div>
+                        <div class="message-time">10:45 AM</div>
+                    </div>
+                    <div class="message-preview">Capacitación: Recordatorio para la sesión de hoy a las 17:00 hrs. Por favor confirma tu asistencia.</div>
+                </div>
+            </div>
+
+            <!-- Unread Message -->
+            <div class="message-item unread-message">
+                <div class="unread-indicator"></div>
+                <div class="message-avatar">JL</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <div class="message-sender">Javier López</div>
+                        <div class="message-time">Ayer</div>
+                    </div>
+                    <div class="message-preview">Hola, necesito información sobre la próxima asamblea. ¿Podrías enviarme los detalles?</div>
+                </div>
+            </div>
+
+            <!-- Read Message -->
+            <div class="message-item">
+                <div class="message-avatar">MX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <div class="message-sender">México Tiene Vida</div>
+                        <div class="message-time">Ayer</div>
+                    </div>
+                    <div class="message-preview">Importante: Nuevas metas de afiliación para el mes de abril. Consulta los detalles en el panel.</div>
+                    <div class="message-status">
+                        <svg class="message-status-icon" viewBox="0 0 24 24">
+                            <path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z"/>
+                        </svg>
+                        <span class="message-status-text">Leído</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Read Message -->
+            <div class="message-item">
+                <div class="message-avatar">AR</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <div class="message-sender">Ana Ramírez</div>
+                        <div class="message-time">12/04/2025</div>
+                    </div>
+                    <div class="message-preview">Gracias por el apoyo en la asamblea del sábado. El evento fue un éxito gracias a tu participación.</div>
+                </div>
+            </div>
+
+            <!-- Read Message -->
+            <div class="message-item">
+                <div class="message-avatar">MX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <div class="message-sender">México Tiene Vida</div>
+                        <div class="message-time">10/04/2025</div>
+                    </div>
+                    <div class="message-preview">Actualizaciones importantes: Nuevos materiales disponibles en la sección de capacitación.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Message Button -->
+        <button class="new-message-btn">
+            <svg class="new-message-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+        </button>
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+            </svg>
+            Capacitación
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            Info Partido
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Panel
+        </a>
+        <a href="#" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+            Mensajes
+        </a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Message item click functionality
+            const messageItems = document.querySelectorAll('.message-item');
+
+            messageItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // In a real app, this would navigate to the message detail view
+                    console.log('Message clicked:', this.querySelector('.message-sender').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

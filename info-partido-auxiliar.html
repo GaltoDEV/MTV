@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Información del Partido</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .back-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .profile-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-bottom: 70px; /* Space for footer */
+        }
+
+        /* Info Card Styles */
+        .info-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .info-card-title {
+            color: #003da5;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-card-text {
+            padding: 15px;
+            line-height: 1.5;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .info-card-text p {
+            margin-bottom: 15px;
+        }
+
+        .info-card-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .carousel-slider {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+
+        .carousel-slider::-webkit-scrollbar { /* WebKit */
+            display: none;
+        }
+
+        .carousel-slide {
+            flex-shrink: 0;
+            width: 100%;
+            scroll-snap-align: start;
+            height: 200px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e8eeff;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .carousel-control.prev {
+            left: 10px;
+        }
+
+        .carousel-control.next {
+            right: 10px;
+        }
+
+        .carousel-control svg {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 12px;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #003da5;
+        }
+
+        .nav-icon {
+            width: 22px;
+            height: 22px;
+            margin-bottom: 3px;
+            fill: currentColor;
+        }
+
+        /* Card Divider */
+        .card-divider {
+            height: 1px;
+            background-color: #f0f0f0;
+            margin: 0 15px;
+        }
+
+        /* Indicator Dots */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 4px;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-dot.active {
+            background-color: #003da5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with back button, logo, and profile icon -->
+    <header class="header">
+        <button class="back-btn">
+            <svg class="back-icon" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+        </button>
+
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='148' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+
+        <button class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Quiénes Somos Card -->
+        <div class="info-card">
+            <h2 class="info-card-title">¿Quiénes Somos?</h2>
+            <div class="info-card-text">
+                <p>Somos un movimiento político comprometido con la transformación de México. Nuestro partido está formado por ciudadanos que buscan construir un país con más oportunidades, justicia y desarrollo para todos.</p>
+                <p>Creemos en la democracia participativa, el respeto a los derechos humanos y el desarrollo sostenible como pilares fundamentales para el crecimiento de nuestra nación.</p>
+            </div>
+
+            <div class="carousel-container">
+                <div class="carousel-slider" id="carousel1">
+                    <div class="carousel-slide">
+                        <img src="/api/placeholder/400/200" alt="Imagen de México Tiene Vida">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="/api/placeholder/400/200" alt="Miembros del partido">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="/api/placeholder/400/200" alt="Evento del partido">
+                    </div>
+                </div>
+
+                <div class="carousel-control prev" data-carousel="carousel1">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    </svg>
+                </div>
+
+                <div class="carousel-control next" data-carousel="carousel1">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    </svg>
+                </div>
+
+                <div class="carousel-indicators" id="indicators1">
+                    <div class="carousel-dot active"></div>
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Por qué Surge Card -->
+        <div class="info-card">
+            <h2 class="info-card-title">¿Por qué Surge?</h2>
+            <div class="info-card-text">
+                <p>México Tiene Vida surge como respuesta a la necesidad de un nuevo proyecto político que represente verdaderamente los intereses de todos los mexicanos.</p>
+                <p>Nuestro movimiento nació de la convicción de que es posible construir un México más justo, próspero y con mayor calidad de vida para todos sus habitantes, especialmente para quienes han sido históricamente marginados.</p>
+            </div>
+
+            <div class="carousel-container">
+                <div class="carousel-slider" id="carousel2">
+                    <div class="carousel-slide">
+                        <img src="/api/placeholder/400/200" alt="Origen del partido">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="/api/placeholder/400/200" alt="Fundadores">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="/api/placeholder/400/200" alt="Historia del partido">
+                    </div>
+                </div>
+
+                <div class="carousel-control prev" data-carousel="carousel2">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    </svg>
+                </div>
+
+                <div class="carousel-control next" data-carousel="carousel2">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    </svg>
+                </div>
+
+                <div class="carousel-indicators" id="indicators2">
+                    <div class="carousel-dot active"></div>
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Principios y Valores Card -->
+        <div class="info-card">
+            <h2 class="info-card-title">Principios y Valores</h2>
+            <div class="info-card-text">
+                <p><strong>Honestidad:</strong> Promovemos la transparencia y rendición de cuentas en todas nuestras acciones.</p>
+                <p><strong>Inclusión:</strong> Trabajamos por un México donde todas las voces sean escuchadas y representadas.</p>
+                <p><strong>Sustentabilidad:</strong> Impulsamos políticas que garanticen el desarrollo económico en armonía con el medio ambiente.</p>
+                <p><strong>Justicia Social:</strong> Luchamos por la reducción de la desigualdad y la creación de oportunidades para todos.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+            </svg>
+            Capacitación
+        </a>
+        <a href="#" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            Info Partido
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Panel
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+            Mensajes
+        </a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para gestionar cada carrusel
+            function setupCarousel(carouselId, indicatorsId) {
+                const slider = document.getElementById(carouselId);
+                const slides = slider.querySelectorAll('.carousel-slide');
+                const prevBtn = document.querySelector(`.carousel-control.prev[data-carousel="${carouselId}"]`);
+                const nextBtn = document.querySelector(`.carousel-control.next[data-carousel="${carouselId}"]`);
+                const dots = document.getElementById(indicatorsId).querySelectorAll('.carousel-dot');
+
+                let currentIndex = 0;
+                const slideWidth = slider.offsetWidth;
+
+                // Actualizar los indicadores de posición
+                function updateIndicators() {
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentIndex);
+                    });
+                }
+
+                // Navegar al slide anterior
+                prevBtn.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        slider.scrollTo({
+                            left: currentIndex * slideWidth,
+                            behavior: 'smooth'
+                        });
+                        updateIndicators();
+                    }
+                });
+
+                // Navegar al siguiente slide
+                nextBtn.addEventListener('click', () => {
+                    if (currentIndex < slides.length - 1) {
+                        currentIndex++;
+                        slider.scrollTo({
+                            left: currentIndex * slideWidth,
+                            behavior: 'smooth'
+                        });
+                        updateIndicators();
+                    }
+                });
+
+                // Permitir clic en los indicadores para navegar
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        slider.scrollTo({
+                            left: currentIndex * slideWidth,
+                            behavior: 'smooth'
+                        });
+                        updateIndicators();
+                    });
+                });
+
+                // Detectar cambios de scroll para actualizar los indicadores
+                slider.addEventListener('scroll', () => {
+                    const scrollPosition = slider.scrollLeft;
+                    const newIndex = Math.round(scrollPosition / slideWidth);
+
+                    if (newIndex !== currentIndex) {
+                        currentIndex = newIndex;
+                        updateIndicators();
+                    }
+                });
+            }
+
+            // Configurar cada carrusel
+            setupCarousel('carousel1', 'indicators1');
+            setupCarousel('carousel2', 'indicators2');
+        });
+    </script>
+</body>
+</html>
