@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Información del Partido</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .menu-btn, .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon, .profile-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-bottom: 70px; /* Space for footer */
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #003da5;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* Info Sections */
+        .info-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            width: 22px;
+            height: 22px;
+            fill: #003da5;
+            margin-right: 10px;
+        }
+
+        .section-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .section-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+
+        /* File Upload */
+        .file-upload-container {
+            margin-top: 15px;
+        }
+
+        .file-upload-label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .file-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .file-icon {
+            width: 20px;
+            height: 20px;
+            fill: #003da5;
+            margin-right: 10px;
+        }
+
+        .file-name {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: #777;
+            margin-right: 10px;
+        }
+
+        .file-remove {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .file-upload {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .file-input-text {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Admin Controls */
+        .admin-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .admin-button {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-button.save {
+            background-color: #003da5;
+            color: white;
+            border: none;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .admin-button.cancel {
+            background-color: white;
+            color: #003da5;
+            border: 1px solid #003da5;
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .button-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            margin-right: 8px;
+        }
+
+        /* Add Section Button */
+        .add-section-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 1px dashed #003da5;
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: #003da5;
+            font-weight: 500;
+        }
+
+        .add-section-icon {
+            width: 20px;
+            height: 20px;
+            fill: #003da5;
+            margin-right: 8px;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 11px;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #003da5;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 3px;
+            fill: currentColor;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .admin-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .admin-button {
+                margin: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with hamburger menu, logo and profile icon -->
+    <header class="header">
+        <button class="menu-btn">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='148' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+
+        <button class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <h1 class="page-title">Información del Partido</h1>
+        <p class="subtitle">Administra la información que se mostrará a los auxiliares</p>
+
+        <!-- Information Section 1: Estatutos -->
+        <div class="info-card">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+                Estatutos
+            </h2>
+            <input type="text" class="section-input" placeholder="Título de la sección" value="Estatutos del partido">
+            <textarea class="section-textarea" placeholder="Contenido de la sección">El partido "México Tiene Vida" se fundamenta en los siguientes estatutos, que rigen su organización interna y funcionamiento:
+
+1. Principios y Valores
+2. Estructura Organizativa
+3. Derechos y Obligaciones de los Miembros
+4. Procesos de Elección Interna
+5. Mecanismos de Participación
+
+Para consultar el documento completo, revisa el archivo adjunto.</textarea>
+
+            <div class="file-upload-container">
+                <label class="file-upload-label">Archivos adjuntos:</label>
+                <ul class="file-list">
+                    <li class="file-item">
+                        <svg class="file-icon" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        </svg>
+                        <span class="file-name">estatutos_mtv_2023.pdf</span>
+                        <span class="file-size">2.4 MB</span>
+                        <button class="file-remove">×</button>
+                    </li>
+                </ul>
+                <div class="file-upload">
+                    <div class="file-input-container">
+                        <button class="file-input-button">Seleccionar archivo</button>
+                        <input type="file" class="file-input">
+                    </div>
+                    <span class="file-input-text">Formatos admitidos: PDF, DOCX, JPG</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Section 2: Requisitos para afiliados -->
+        <div class="info-card">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24">
+                    <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                Requisitos para afiliados
+            </h2>
+            <input type="text" class="section-input" placeholder="Título de la sección" value="Requisitos para Afiliación">
+            <textarea class="section-textarea" placeholder="Contenido de la sección">Para afiliarse al partido "México Tiene Vida", los ciudadanos deben cumplir con los siguientes requisitos:
+
+1. Ser ciudadano mexicano con credencial de elector vigente
+2. Llenar completamente el formulario de afiliación
+3. Proporcionar una fotografía reciente
+4. Firma autógrafa en el formato de afiliación
+
+Recuerda que es fundamental revisar que la credencial de elector esté vigente y que todos los datos sean claramente legibles.</textarea>
+
+            <div class="file-upload-container">
+                <label class="file-upload-label">Archivos adjuntos:</label>
+                <ul class="file-list">
+                    <li class="file-item">
+                        <svg class="file-icon" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        </svg>
+                        <span class="file-name">guia_afiliacion_auxiliares.pdf</span>
+                        <span class="file-size">1.8 MB</span>
+                        <button class="file-remove">×</button>
+                    </li>
+                    <li class="file-item">
+                        <svg class="file-icon" viewBox="0 0 24 24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 12H7v-2h10v2zm0-4H7V9h10v2zm0-4H7V5h10v2z"/>
+                        </svg>
+                        <span class="file-name">formato_afiliacion.docx</span>
+                        <span class="file-size">450 KB</span>
+                        <button class="file-remove">×</button>
+                    </li>
+                </ul>
+                <div class="file-upload">
+                    <div class="file-input-container">
+                        <button class="file-input-button">Seleccionar archivo</button>
+                        <input type="file" class="file-input">
+                    </div>
+                    <span class="file-input-text">Formatos admitidos: PDF, DOCX, JPG</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add New Section Button -->
+        <button class="add-section-button">
+            <svg class="add-section-icon" viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            Agregar nueva sección
+        </button>
+
+        <!-- Admin Control Buttons -->
+        <div class="admin-controls">
+            <button class="admin-button cancel">
+                <svg class="button-icon" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+                Cancelar
+            </button>
+            <button class="admin-button save">
+                <svg class="button-icon" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                Guardar cambios
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            Afiliados
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            Auxiliares
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Panel
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+            Mensajes
+        </a>
+        <a href="#" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+            Asambleas
+        </a>
+    </nav>
+</body>
+</html>

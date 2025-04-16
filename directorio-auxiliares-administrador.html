@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Directorio de Auxiliares</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .menu-btn, .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon, .profile-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-bottom: 70px; /* Space for footer */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #003da5;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .search-icon {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            fill: #003da5;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Filters Section */
+        .filters-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background-color: white;
+            font-size: 14px;
+            color: #555;
+            flex-grow: 1;
+        }
+
+        /* Auxiliares List */
+        .auxiliares-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .auxiliar-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .auxiliar-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #003da5;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .auxiliar-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .auxiliar-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .auxiliar-details {
+            display: flex;
+            font-size: 14px;
+            color: #777;
+            gap: 15px;
+        }
+
+        .auxiliar-location, .auxiliar-affiliates {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-btn {
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .contact-icon {
+            width: 16px;
+            height: 16px;
+            fill: white;
+            margin-right: 5px;
+        }
+
+        /* Floating Add Button */
+        .add-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 61, 165, 0.3);
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .add-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 11px;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #003da5;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 3px;
+            fill: currentColor;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .auxiliar-details {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .contact-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .contact-btn span {
+                display: none;
+            }
+
+            .contact-icon {
+                margin-right: 0;
+            }
+
+            .filters-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with hamburger menu, logo and profile icon -->
+    <header class="header">
+        <button class="menu-btn">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='148' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+
+        <button class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <h1 class="page-title">Directorio de Auxiliares</h1>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            <input type="text" class="search-input" placeholder="Buscar auxiliar...">
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <select class="filter-select">
+                <option value="">Todos los estados</option>
+                <option value="jalisco">Jalisco</option>
+                <option value="cdmx">Ciudad de México</option>
+                <option value="edomex">Estado de México</option>
+                <option value="nuevo-leon">Nuevo León</option>
+                <option value="puebla">Puebla</option>
+            </select>
+
+            <select class="filter-select">
+                <option value="">Todos los municipios</option>
+                <option value="guadalajara">Guadalajara</option>
+                <option value="zapopan">Zapopan</option>
+                <option value="monterrey">Monterrey</option>
+                <option value="puebla-ciudad">Puebla</option>
+                <option value="toluca">Toluca</option>
+            </select>
+
+            <select class="filter-select">
+                <option value="">Afiliados</option>
+                <option value="0-10">0 - 10</option>
+                <option value="11-50">11 - 50</option>
+                <option value="51-100">51 - 100</option>
+                <option value="101+">Más de 100</option>
+            </select>
+        </div>
+
+        <!-- Auxiliares List -->
+        <div class="auxiliares-list">
+            <!-- Auxiliar 1 -->
+            <div class="auxiliar-card">
+                <div class="auxiliar-photo">MR</div>
+                <div class="auxiliar-info">
+                    <h3 class="auxiliar-name">María Rodríguez Vega</h3>
+                    <div class="auxiliar-details">
+                        <span class="auxiliar-location">Jalisco, Guadalajara</span>
+                        <span class="auxiliar-affiliates">158 afiliados</span>
+                    </div>
+                </div>
+                <button class="contact-btn">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span>Contactar</span>
+                </button>
+            </div>
+
+            <!-- Auxiliar 2 -->
+            <div class="auxiliar-card">
+                <div class="auxiliar-photo">JS</div>
+                <div class="auxiliar-info">
+                    <h3 class="auxiliar-name">Juan Sánchez Márquez</h3>
+                    <div class="auxiliar-details">
+                        <span class="auxiliar-location">CDMX, Cuauhtémoc</span>
+                        <span class="auxiliar-affiliates">95 afiliados</span>
+                    </div>
+                </div>
+                <button class="contact-btn">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span>Contactar</span>
+                </button>
+            </div>
+
+            <!-- Auxiliar 3 -->
+            <div class="auxiliar-card">
+                <div class="auxiliar-photo">LH</div>
+                <div class="auxiliar-info">
+                    <h3 class="auxiliar-name">Laura Hernández Torres</h3>
+                    <div class="auxiliar-details">
+                        <span class="auxiliar-location">Nuevo León, Monterrey</span>
+                        <span class="auxiliar-affiliates">112 afiliados</span>
+                    </div>
+                </div>
+                <button class="contact-btn">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span>Contactar</span>
+                </button>
+            </div>
+
+            <!-- Auxiliar 4 -->
+            <div class="auxiliar-card">
+                <div class="auxiliar-photo">CG</div>
+                <div class="auxiliar-info">
+                    <h3 class="auxiliar-name">Carlos González Ramírez</h3>
+                    <div class="auxiliar-details">
+                        <span class="auxiliar-location">Jalisco, Zapopan</span>
+                        <span class="auxiliar-affiliates">67 afiliados</span>
+                    </div>
+                </div>
+                <button class="contact-btn">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span>Contactar</span>
+                </button>
+            </div>
+
+            <!-- Auxiliar 5 -->
+            <div class="auxiliar-card">
+                <div class="auxiliar-photo">AM</div>
+                <div class="auxiliar-info">
+                    <h3 class="auxiliar-name">Ana Martínez López</h3>
+                    <div class="auxiliar-details">
+                        <span class="auxiliar-location">Estado de México, Toluca</span>
+                        <span class="auxiliar-affiliates">84 afiliados</span>
+                    </div>
+                </div>
+                <button class="contact-btn">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span>Contactar</span>
+                </button>
+            </div>
+
+            <!-- Auxiliar 6 -->
+            <div class="auxiliar-card">
+                <div class="auxiliar-photo">PV</div>
+                <div class="auxiliar-info">
+                    <h3 class="auxiliar-name">Pedro Vázquez Méndez</h3>
+                    <div class="auxiliar-details">
+                        <span class="auxiliar-location">Puebla, Puebla</span>
+                        <span class="auxiliar-affiliates">41 afiliados</span>
+                    </div>
+                </div>
+                <button class="contact-btn">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    <span>Contactar</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Add Button -->
+        <button class="add-button">
+            <svg class="add-icon" viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+        </button>
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            Afiliados
+        </a>
+        <a href="#" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            Auxiliares
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Panel
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+            Mensajes
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+            Asambleas
+        </a>
+    </nav>
+</body>
+</html>

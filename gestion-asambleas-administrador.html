@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>México Tiene Vida - Gestión de Asambleas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .menu-btn, .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon, .profile-icon {
+            width: 24px;
+            height: 24px;
+            fill: #003da5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-bottom: 70px; /* Space for footer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #003da5;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Asambleas Grid Layout */
+        .asambleas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .asamblea-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .asamblea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        }
+
+        .asamblea-header {
+            padding: 15px;
+            background-color: #003da5;
+            color: white;
+        }
+
+        .asamblea-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .asamblea-location {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .asamblea-content {
+            padding: 15px;
+        }
+
+        .asamblea-info {
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-section {
+            margin-top: 10px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .progress-status {
+            display: flex;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background-color: #e6f7ee;
+            color: #28a745;
+        }
+
+        .status-pending {
+            background-color: #fff8e6;
+            color: #ffc107;
+        }
+
+        .status-progress {
+            background-color: #e6f2ff;
+            color: #007bff;
+        }
+
+        /* Add New Button */
+        .add-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #003da5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 61, 165, 0.3);
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .add-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 11px;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #003da5;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 3px;
+            fill: currentColor;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .asambleas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with hamburger menu, logo and profile icon -->
+    <header class="header">
+        <button class="menu-btn">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='120' height='40'%3E%3Cstyle%3E .blue %7B fill: %23003da5; %7D .gold %7B fill: %23b39267; %7D .white %7B fill: white; %7D %3C/style%3E%3Cpath class='blue' d='M150 40 C 130 40, 100 70, 100 120 C 100 140, 110 160, 150 160 L 150 40' /%3E%3Cpath class='gold' d='M40 40 C 60 40, 100 40, 120 70 L 80 100 C 60 80, 40 60, 40 40' /%3E%3Cpath class='gold' d='M220 40 C 240 40, 260 40, 260 70 L 220 100 C 200 80, 220 60, 220 40' /%3E%3Cpath class='white' d='M150 70 C 160 70, 170 80, 170 90 L 178 82 C 178 77, 182 73, 187 73 C 192 73, 195 76, 195 80 C 195 83, 190 90, 183 97 L 186 100 C 175 115, 160 125, 145 125 L 145 90 C 145 80, 140 70, 150 70' /%3E%3Ctext class='blue' x='150' y='148' font-family='Arial, sans-serif' font-weight='bold' font-size='16' text-anchor='middle'%3EMÉXICO TIENE VIDA%3C/text%3E%3C/svg%3E" alt="México Tiene Vida" class="logo">
+
+        <button class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <h1 class="page-title">Gestión de Asambleas</h1>
+        <p class="subtitle">Organización y seguimiento de asambleas estatales</p>
+
+        <!-- Asambleas Grid -->
+        <div class="asambleas-grid">
+            <!-- Asamblea 1 -->
+            <div class="asamblea-card">
+                <div class="asamblea-header">
+                    <h2 class="asamblea-title">Asamblea Constitutiva</h2>
+                    <div class="asamblea-location">Jalisco</div>
+                </div>
+                <div class="asamblea-content">
+                    <div class="asamblea-info">
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span class="info-value">25 de Mayo, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Asistentes:</span>
+                            <span class="info-value">325 / 300</span>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span class="progress-text">Tareas completadas</span>
+                            <span class="progress-text">8/10</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 80%; background-color: #28a745;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-badge status-progress">En progreso</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asamblea 2 -->
+            <div class="asamblea-card">
+                <div class="asamblea-header">
+                    <h2 class="asamblea-title">Asamblea Estatal</h2>
+                    <div class="asamblea-location">Ciudad de México</div>
+                </div>
+                <div class="asamblea-content">
+                    <div class="asamblea-info">
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span class="info-value">18 de Abril, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Asistentes:</span>
+                            <span class="info-value">412 / 350</span>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span class="progress-text">Tareas completadas</span>
+                            <span class="progress-text">10/10</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%; background-color: #28a745;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-badge status-completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asamblea 3 -->
+            <div class="asamblea-card">
+                <div class="asamblea-header">
+                    <h2 class="asamblea-title">Asamblea Regional</h2>
+                    <div class="asamblea-location">Nuevo León</div>
+                </div>
+                <div class="asamblea-content">
+                    <div class="asamblea-info">
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span class="info-value">10 de Junio, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Asistentes:</span>
+                            <span class="info-value">210 / 250</span>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span class="progress-text">Tareas completadas</span>
+                            <span class="progress-text">3/10</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 30%; background-color: #ffc107;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-badge status-pending">Planificación</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asamblea 4 -->
+            <div class="asamblea-card">
+                <div class="asamblea-header">
+                    <h2 class="asamblea-title">Asamblea Extraordinaria</h2>
+                    <div class="asamblea-location">Estado de México</div>
+                </div>
+                <div class="asamblea-content">
+                    <div class="asamblea-info">
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span class="info-value">3 de Mayo, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Asistentes:</span>
+                            <span class="info-value">385 / 300</span>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span class="progress-text">Tareas completadas</span>
+                            <span class="progress-text">9/10</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 90%; background-color: #28a745;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-badge status-progress">En progreso</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asamblea 5 -->
+            <div class="asamblea-card">
+                <div class="asamblea-header">
+                    <h2 class="asamblea-title">Asamblea de Afiliados</h2>
+                    <div class="asamblea-location">Puebla</div>
+                </div>
+                <div class="asamblea-content">
+                    <div class="asamblea-info">
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span class="info-value">15 de Julio, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Asistentes:</span>
+                            <span class="info-value">0 / 200</span>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span class="progress-text">Tareas completadas</span>
+                            <span class="progress-text">1/10</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 10%; background-color: #ffc107;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-badge status-pending">Planificación</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asamblea 6 -->
+            <div class="asamblea-card">
+                <div class="asamblea-header">
+                    <h2 class="asamblea-title">Asamblea Distrital</h2>
+                    <div class="asamblea-location">Guanajuato</div>
+                </div>
+                <div class="asamblea-content">
+                    <div class="asamblea-info">
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span class="info-value">22 de Abril, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Asistentes:</span>
+                            <span class="info-value">285 / 250</span>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span class="progress-text">Tareas completadas</span>
+                            <span class="progress-text">10/10</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%; background-color: #28a745;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-badge status-completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Button -->
+        <button class="add-button">
+            <svg class="add-icon" viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+        </button>
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            Afiliados
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            Auxiliares
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Panel
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+            Mensajes
+        </a>
+        <a href="#" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+            Asambleas
+        </a>
+    </nav>
+</body>
+</html>
